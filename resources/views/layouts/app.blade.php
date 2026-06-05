@@ -8,27 +8,30 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ asset('template/dist/assets/css/bootstrap.css') }}">
 
-    <link rel="stylesheet" href="assets/vendors/iconly/bold.css">
+    <link rel="stylesheet" href="{{ asset('template/dist/assets/vendors/iconly/bold.css') }}">
 
-    <link rel="stylesheet" href="assets/vendors/perfect-scrollbar/perfect-scrollbar.css">
-    <link rel="stylesheet" href="assets/vendors/bootstrap-icons/bootstrap-icons.css">
-    <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="{{ asset('template/dist/assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/dist/assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/dist/assets/css/app.css') }}">
+    <link rel="shortcut icon" href="{{ asset('template/dist/assets/images/favicon.svg') }}" type="image/x-icon">
 
 </head>
 <style>
-    #main {
+    /* #main {
         display: flex;
         flex-direction: coloumn;
         min-height: 100vh;
     }
-    footer{
+
+    footer {
         margin-top: auto;
-    }
+    } */
 </style>
+
 <body>
+    @include('sweetalert::alert')
     <div id="app">
         @include('layouts.inc.sidebar')
 
@@ -39,16 +42,23 @@
                 </a>
             </header>
 
+
             <div class="page-heading">
                 <h3>@yield('title')</h3>
             </div>
             <div class="page-content">
+                @yield('content')
                 <section class="row">
                     <div class="col-12 col-lg-9">
-                        @yield('content')
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                     </div>
                 </section>
             </div>
+
 
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
@@ -70,6 +80,8 @@
     <script src="assets/js/pages/dashboard.js"></script>
 
     <script src="assets/js/main.js"></script>
+    @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+
 </body>
 
 </html>
