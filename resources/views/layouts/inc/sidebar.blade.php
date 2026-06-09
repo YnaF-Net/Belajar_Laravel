@@ -1,27 +1,52 @@
 <div id="sidebar" class="active">
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header">
-                    <div class="d-flex justify-content-between">
-                        <div class="logo">
-                            <a href="index.html"><img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo" srcset=""></a>
-                        </div>
-                        <div class="toggler">
-                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
-                        </div>
-                    </div>
+    <div class="sidebar-wrapper active">
+        <div class="sidebar-header">
+            <div class="d-flex justify-content-between">
+                <div class="logo">
+                    <a href="index.html"><img src="{{ asset('assets/images/logo/logo.png') }}" alt="Logo"
+                            srcset=""></a>
                 </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-                        <li class="sidebar-title">Menu</li>
+                <div class="toggler">
+                    <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="sidebar-title">Menu</li>
 
-                        <li class="sidebar-item active ">
-                            <a href="index.html" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
+                <li class="sidebar-item active ">
+                    <a href="{{ route('dashboard') }}" class='sidebar-link'>
+                        <i class="bi bi-grid-fill"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item  has-sub">
+                    <a href="#" class='sidebar-link'>
+                        <i class="bi bi-person"></i>
+                        <span>Master Data</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item ">
+                            <a href="{{ route('user.index') }}">User</a>
                         </li>
+                        <li class="submenu-item ">
+                            <a href="{{ route('role.index') }}">Role</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{{ route('major.index') }}">Major</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{{ route('key.index') }}">Key</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{{ route('student.index') }}">Student</a>
+                        </li>
+                    </ul>
+                </li>
 
-                        <li class="sidebar-item  has-sub">
+                {{-- <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-stack"></i>
                                 <span>Components</span>
@@ -94,9 +119,9 @@
                                     <a href="extra-component-divider.html">Divider</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
-                        <li class="sidebar-item  has-sub">
+                {{-- <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-person-badge-fill"></i>
                                 <span>User Management</span>
@@ -115,18 +140,39 @@
                                     <a href="layout-horizontal.html">Create Role</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
-                        <li class="sidebar-item">
+                {{-- <li class="sidebar-item">
                             <a href="{{ route('locker.index') }}" class='sidebar-link'>
                                 <i class="bi bi-grid-fill"></i>
                                 <span>Locker Management</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-title">Forms &amp; Tables</li>
+                        <li class="sidebar-item">
+                            <a href="{{ route('major.index') }}" class='sidebar-link'>
+                                <i class="bi bi-people-fill"></i>
+                                <span>Major Management</span>
+                            </a>
+                        </li>
 
-                        <li class="sidebar-item  has-sub">
+                        <li class="sidebar-item">
+                            <a href="{{ route('key.index') }}" class='sidebar-link'>
+                                <i class="bi bi-key-fill"></i>
+                                <span>Key Management</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="{{ route('student.index') }}" class='sidebar-link'>
+                                <i class="bi bi-profile-fill"></i>
+                                <span>Student Management</span>
+                            </a>
+                        </li> --}}
+
+                {{-- <li class="sidebar-title">Forms &amp; Tables</li> --}}
+
+                {{-- <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-hexagon-fill"></i>
                                 <span>Form Elements</span>
@@ -334,9 +380,9 @@
                                     <a href="error-500.html">500</a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> --}}
 
-                        <li class="sidebar-title">Raise Support</li>
+                {{-- <li class="sidebar-title">Raise Support</li>
 
                         <li class="sidebar-item  ">
                             <a href="https://zuramai.github.io/mazer/docs" class='sidebar-link'>
@@ -357,16 +403,16 @@
                                 <i class="bi bi-cash"></i>
                                 <span>Donate</span>
                             </a>
-                        </li>
+                        </li> --}}
 
-                    <li class="sidebar-item">
-                        <form action="{{ route('action-logout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Log out</button>
-                        </form>
-                    </li>
-                    </ul>
-                </div>
-                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-            </div>
+                <li class="sidebar-item">
+                    <form action="{{ route('action-logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Log out</button>
+                    </form>
+                </li>
+            </ul>
         </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
+</div>
