@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'STUDENTS MANAGEMENT')
+@section('title', 'INSTRUCTOR MANAGEMENT')
 @section('content')
     <div class="card">
         <div class="card-header">
@@ -7,34 +7,34 @@
         </div>
         <div class="card-body">
         <div class="mb-3" align="right">
-            <a href="{{ route('student.create') }}" class="btn btn-primary">Create New Student</a>
+            <a href="{{ route('instructor.create') }}" class="btn btn-primary">Create New Instructor</a>
         </div>
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
                         <th>Major</th>
-                        <th>Name</th>
+                        <th>Instructor Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($students as $index => $student)
+                    @foreach ($instructors as $index => $instructor)
                         <tr>
                             <td>{{ $index += 1 }}</td>
-                            <td>{{ $student->major->name ?? '' }}</td>
-                            <td>{{ $student->name ?? '' }}</td>
-                            <td>{{ $student->user->email ?? '' }}</td>
-                            <td>{{ $student->phone ?? '' }}</td>
+                            <td>{{ $instructor->major->name ?? '' }}</td>
+                            <td>{{ $instructor->name ?? '' }}</td>
+                            <td>{{ $instructor->user->email ?? '' }}</td>
+                            <td>{{ $instructor->phone ?? '' }}</td>
                             <td>
-                                <a href="{{ route('student.edit', $student->id) }}" class="btn btn-success icon">
+                                <a href="{{ route('instructor.edit', $instructor->id) }}" class="btn btn-success icon">
                                     <i class="bi bi-pencil"></i> Edit
                                 </a>
                                 {{-- <a href="" class="btn btn-danger icon">
                                     <i class="bi bi-trash"></i> Delete
                                 </a> --}}
-                                <form action="{{ route('student.destroy', $student->id) }}" method="POST" class="d-inline">
+                                <form action="{{ route('instructor.destroy', $instructor->id) }}" method="POST" class="d-inline">
                                     @csrf
                                     @method('DELETE')
 

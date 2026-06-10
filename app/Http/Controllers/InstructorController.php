@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
+use App\Models\Instructor;
 use App\Models\Majors;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
-class StudentController extends Controller
+class InstructorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,11 +21,11 @@ class StudentController extends Controller
         //
         // $users = User::orderBy('id', 'desc')->get;
         // $users = User::latest()->get();
-        $students = Student::with('major', 'user')->orderByDesc('id')->get();
+        $instructors = Instructor::with('major', 'user')->orderByDesc('id')->get();
         // return $students;
         // dd($students);
-        $title = 'Student Management';
-        return view('student.index', compact('students', 'title'));
+        $title = 'Instructor Management';
+        return view('instructor.index', compact('instructors', 'title'));
     }
 
     /**
@@ -34,9 +34,9 @@ class StudentController extends Controller
     public function create()
     {
         //
-        $title = "Create New Student";
+        $title = "Create New Instructor";
         $majors = Majors::get();
-        return view('student.create', compact('title', 'majors'));
+        return view('instructor.create', compact('title', 'majors'));
     }
 
     /**
@@ -59,7 +59,7 @@ class StudentController extends Controller
                 'password' => $request->password,
             ]);
             //insert student
-            Student::create([
+            Instructor::create([
                 'name' => $request->name,
                 'user_id' => $user->id,
                 'major_id' => $request->major_id,
@@ -68,7 +68,7 @@ class StudentController extends Controller
             DB::commit();
             Alert::success('Success!!', 'Created Student success');
             // toast('Your Student Has Been Created!', 'success');
-            return redirect()->to('student');
+            return redirect()->to('instructor');
         } catch (\Throwable $th) {
             DB::rollBack();
             return $th->getMessage();
@@ -97,17 +97,17 @@ class StudentController extends Controller
     public function edit(string $id)
     {
         //
-        $title = 'Edit Student';
+        $title = 'Edit Instructor';
         $majors = Majors::get();
-        $edit = Student::with('user')->findOrFail($id); //kalo gabisa blank
+        $edit = Instructor::with('user')->findOrFail($id); //kalo gabisa blank
         // $edit = User::findOrFail($id); //kalo gabisa 404
-        return view('student.edit', compact('title', 'edit', 'majors'));
+        return view('instructor.edit', compact('title', 'edit', 'majors'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Instructor $instructor)
     {
         DB::beginTransaction();
         try {
@@ -115,7 +115,7 @@ class StudentController extends Controller
                 'name' => $request->name,
                 'email' => $request->email
             ];
-            $user = $student->user;
+            $user = $instructor->user;
             //jika ingin mengganti password
             if($request->filled('password')) {
                 $dataUser['password'] = $request->password;
@@ -129,9 +129,9 @@ class StudentController extends Controller
             ];
             //code...
             // Student::find($id)->update($data);
-            $student->update($data);
+            $instructor->update($data);
             DB::commit();
-            Alert::success('Success!!', 'Created Student success');
+            Alert::success('Success!!', 'Created Instructor success');
             return redirect()->to('student');
         } catch (\Throwable $th) {
             //throw $th;
@@ -144,22 +144,22 @@ class StudentController extends Controller
         //jika user memasukan password
 
 
-        Student::find($id)->update($data);
-        return redirect()->to('student');
+        Instructor::find($id)->update($data);
+        return redirect()->to('instructor');
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Instructor $instructor)
     {
         //
         try {
             //code...
-            $student->user()->delete();
-            Alert::success('Success!!', 'Your Student Has Been Deleted');
-            return redirect()->to('student');
+            $instructor->user()->delete();
+            Alert::success('Success!!', 'Your Instructor Has Been Deleted');
+            return redirect()->to('instructor');
         } catch (\Throwable $th) {
             //throw $th;
             DB::rollBack();

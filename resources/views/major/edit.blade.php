@@ -16,9 +16,9 @@
                         value="{{ $edit->name }}">
                 </div>
                 <div class="mb-3">
-                    <label for="">Email</label>
+                    <label for="">Status</label><br>
                     <input type="radio" name="is_active" value="1" {{ $edit->is_active == 1 ? 'checked' : '' }}> Active
-
+                    <br>
                     <input type="radio" name="is_active" value="0" {{ $edit->is_active == 0 ? 'checked' : '' }}> Inactive
                 </div>
                 <button class="btn btn-primary" type="submit">Save</button>

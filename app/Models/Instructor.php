@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Instructor extends Model
 {
     //
     protected $fillable = [
@@ -14,7 +14,6 @@ class Student extends Model
         'user_id'
     ];
 
-    //belongsTo
     public function major()
     {
         return $this->belongsTo(Majors::class, 'major_id', 'id');
@@ -25,8 +24,3 @@ class Student extends Model
         return $this->belongsTo(User::class);
     }
 }
-
-// Object Relation Mode
-// One to One : jarang dipakai
-// One to many : satu ke banyak
-// Many to many

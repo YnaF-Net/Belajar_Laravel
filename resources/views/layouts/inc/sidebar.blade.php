@@ -43,6 +43,9 @@
                         <li class="submenu-item ">
                             <a href="{{ route('student.index') }}">Student</a>
                         </li>
+                        <li class="submenu-item ">
+                            <a href="{{ route('instructor.index') }}">Instructor</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -172,30 +175,16 @@
 
                 {{-- <li class="sidebar-title">Forms &amp; Tables</li> --}}
 
-                {{-- <li class="sidebar-item  has-sub">
+                <li class="sidebar-item  has-sub">
                             <a href="#" class='sidebar-link'>
                                 <i class="bi bi-hexagon-fill"></i>
-                                <span>Form Elements</span>
+                                <span>Student Management</span>
                             </a>
                             <ul class="submenu ">
                                 <li class="submenu-item ">
-                                    <a href="form-element-input.html">Input</a>
+                                    <a href="{{ route('student.index') }}">Student</a>
                                 </li>
-                                <li class="submenu-item ">
-                                    <a href="form-element-input-group.html">Input Group</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="form-element-select.html">Select</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="form-element-radio.html">Radio</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="form-element-checkbox.html">Checkbox</a>
-                                </li>
-                                <li class="submenu-item ">
-                                    <a href="form-element-textarea.html">Textarea</a>
-                                </li>
+
                             </ul>
                         </li>
 
@@ -380,7 +369,7 @@
                                     <a href="error-500.html">500</a>
                                 </li>
                             </ul>
-                        </li> --}}
+                        </li>
 
                 {{-- <li class="sidebar-title">Raise Support</li>
 
