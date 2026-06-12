@@ -46,6 +46,12 @@
                         <li class="submenu-item ">
                             <a href="{{ route('instructor.index') }}">Instructor</a>
                         </li>
+                        <li class="submenu-item ">
+                            <a href="{{ route('menu.index') }}">Menu</a>
+                        </li>
+                        <li class="submenu-item ">
+                            <a href="{{ route('user-role.index') }}">User Role</a>
+                        </li>
                     </ul>
                 </li>
 

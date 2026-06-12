@@ -21,6 +21,19 @@
                 <label for="">Password</label>
                 <input type="password" class="form-control" placeholder="Enter Your Password" name="password" required>
             </div>
+            <div class="mb-3">
+                <label for="">Role *</label>
+                <select name="role_ids[]" id="" class="form-control" required multiple>
+                    <option value="">-- Select One --</option>
+                    @foreach ($roles as $role )
+                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                    @endforeach
+                </select>
+
+                <small class="text-secondary">
+                    )* Can Choose More Than One Role
+                </small>
+            </div>
             <button class="btn btn-primary" type="submit">Save</button>
             <a href="{{ url()->previous() }}" class="text-secondary">Back</a>
         </form>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -20,6 +22,11 @@ class UserController extends Controller
         // $users = User::latest()->get();
         $users = User::orderByDesc('id')->get();
         $title = 'User Management';
+
+        $deleteTitle = 'Hapus User!';
+        $deleteText = "Apakah Anda Yakin Ingin Menghapus User Ini?";
+        confirmDelete($deleteTitle, $deleteText);
+        
         return view('user.index', compact('users', 'title'));
     }
 
@@ -30,7 +37,8 @@ class UserController extends Controller
     {
         //
         $title = "Create New User";
-        return view('user.create', compact('title'));
+        $roles = Role::get();
+        return view('user.create', compact('title', 'roles'));
     }
 
     /**
@@ -38,19 +46,37 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6'
-        ]);
+        // $validate = $request->validate([
+        //     'name' => 'required',
+        //     'email' => 'required|email|unique:users,email',
+        //     'password' => 'required|min:6'
+        // ]);
 
-        
+        DB::beginTransaction();
+        try {
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => $request->password,
+            ]);
+
+            $user->roles()->sync($request->role_ids);
+
+            DB::commit();
+            // Alert::success('Success!!', 'Created user success');
+            toast('Your User Has Been Created!', 'success');
+            return redirect()->to('user');
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            return $th->getMessage();
+            DB::rollBack();
+            Alert::error('FAIL!!', 'An Error Occurred While Saving The User');
+            return back()->withInput();
+        }
+
         //
-        User::create($request->all());
-        // Alert::success('Success!!', 'Created user success');
-        toast('Your User Has Been Created!','success');
-
-        return redirect()->to('user');
     }
 
     /**
@@ -69,8 +95,10 @@ class UserController extends Controller
         //
         $title = 'Edit User';
         $edit = User::find($id); //kalo gabisa blank
+        $roles = Role::get();
         // $edit = User::findOrFail($id); //kalo gabisa 404
-        return view('user.edit', compact('title', 'edit'));
+        return view('user.edit', compact('title', 'edit', 'roles'));
+
     }
 
     /**
@@ -78,27 +106,42 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-        ];
-        //jika user memasukan password
-        if(filled($request->password)) {
-            $data['password'] = $request->password;
-        }
+        DB::beginTransaction();
+        try {
+            //code...
+            $data = [
+                'name' => $request->name,
+                'email' => $request->email,
+            ];
+            //jika user memasukan password
+            if (filled($request->password)) {
+                $data['password'] = $request->password;
+            }
 
-        User::find($id)->update($data);
-        return redirect()->to('user');
+            $user = User::find($id);
+            $user->update($data);
+            $user->roles()->sync($request->role_ids);
+            DB::commit();
+            toast('Your User Has Been Update!', 'success');
+            return redirect()->to('user');
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            DB::rollBack();
+            Alert::error('FAIL!!', 'Update Is Failed');
+            return back()->withInput();
+        }
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
         //
-        User::find($id)->delete();
+        $user->delete();
+        Alert::success('SUCCESS!!', 'User Has Been Deleted');
         return redirect()->to('user');
     }
 }

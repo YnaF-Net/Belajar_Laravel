@@ -2,27 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserRole;
 use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Menu;
-// use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
-class RoleController extends Controller
+class UserRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //select * from users
-        //
-        // $users = User::orderBy('id', 'desc')->get;
-        // $users = User::latest()->get();
-        $roles = Role::orderByDesc('id')->get();
-        $title = 'Role Management';
-        return view('role.index', compact('roles', 'title'));
+        $userRoles = UserRole::with('user', 'role')->orderByDesc('id')->get();
+        $title = 'User Role Management';
+        return view('user-role.index', compact('userRoles', 'title'));
     }
 
     /**
@@ -31,8 +27,10 @@ class RoleController extends Controller
     public function create()
     {
         //
-        $title = "Create New Role";
-        return view('role.create', compact('title'));
+        $users = User::get();
+        $roles = Role::get();
+        $title = "Create New User Role";
+        return view('user-role.create', compact('title', 'users', 'roles'));
     }
 
     /**
@@ -41,17 +39,17 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'name' => 'required',
-            'is_active' => 'required'
+            'user_id' => 'required',
+            'role_id' => 'required'
         ]);
 
 
         //
-        Role::create($request->all());
+        UserRole::create($request->all());
         // Alert::success('Success!!', 'Created Role success');
-        toast('Your Role Has Been Created!', 'success');
+        toast('Your User Role Has Been Created!', 'success');
 
-        return redirect()->to('role');
+        return redirect()->to('user-role');
     }
 
     /**
@@ -69,10 +67,9 @@ class RoleController extends Controller
     {
         //
         $title = 'Edit Role';
-        $parents = Menu::with('children')->whereNull('parent_id')->where('is_active', 1)->orderBy('sort_order')->get();
         $edit = Role::find($id); //kalo gabisa blank
         // $edit = User::findOrFail($id); //kalo gabisa 404
-        return view('role.edit', compact('title', 'edit', 'parents'));
+        return view('role.edit', compact('title', 'edit'));
     }
 
     /**

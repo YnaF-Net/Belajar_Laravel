@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'Fany Prayoga',
             'email' => 'ynaf@gmail.com',
             'password' => Hash::make('12345678'),
+            'role_id' => 1
         ]);
     }
 }
