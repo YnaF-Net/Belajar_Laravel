@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Models\Role;
 use App\Models\Menu;
-// use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -48,8 +47,8 @@ class RoleController extends Controller
 
         //
         Role::create($request->all());
-        // Alert::success('Success!!', 'Created Role success');
-        toast('Your Role Has Been Created!', 'success');
+        Alert::success('Success!', 'Your Role has Been Created!');
+        // toast('Your Role Has Been Created!', 'success');
 
         return redirect()->to('role');
     }
@@ -82,14 +81,11 @@ class RoleController extends Controller
     {
         $data = [
             'name' => $request->name,
-            'is_active' => $request->is_active,
+            'is_active' => $request->is_active
         ];
-        //jika user memasukan password
-
 
         Role::find($id)->update($data);
         return redirect()->to('role');
-
     }
 
     /**

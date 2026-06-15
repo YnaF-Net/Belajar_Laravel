@@ -98,7 +98,7 @@ class MenuController extends Controller
         $menu->roles()->sync($request->roles ?? []);
 
         toast('Edit Menu Success', 'success');
-        return redirect()->route('menu.index');
+        return redirect()->to('menu');
     }
 
     /**

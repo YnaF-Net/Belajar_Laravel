@@ -26,7 +26,7 @@ class UserController extends Controller
         $deleteTitle = 'Hapus User!';
         $deleteText = "Apakah Anda Yakin Ingin Menghapus User Ini?";
         confirmDelete($deleteTitle, $deleteText);
-        
+
         return view('user.index', compact('users', 'title'));
     }
 
@@ -37,8 +37,15 @@ class UserController extends Controller
     {
         //
         $title = "Create New User";
+        $lastUser = User::latest()->first();
+        // $number = $lastUser ? substr($lastUser->code, 3) + 1 :1;
+        // code :
+
+        //kalo kondisi id gada dimulai dari 1, kalo ada diambil dari lastUser, dan dibagian usercode setelah strpad pakai $id
+        // $id = $lastUser ? $lastUser->id : 1;
+        $userCode = "USR" . str_pad($lastUser->id + 1, 5, "0", STR_PAD_LEFT);
         $roles = Role::get();
-        return view('user.create', compact('title', 'roles'));
+        return view('user.create', compact('title', 'roles', 'userCode'));
     }
 
     /**

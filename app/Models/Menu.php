@@ -25,7 +25,7 @@ class Menu extends Model
     {
         return $this->belongsTo(Menu::class, 'parent_id');
     }
-    public function childern(): HasMany
+    public function children(): HasMany
     {
         return $this->hasMany(Menu::class, 'parent_id')->orderBy('sort_order', 'asc');
     }
